@@ -8,5 +8,7 @@
 import Foundation
 
 struct TranslationInfo: Hashable {
-  let text: String
+  let originalText: String
+  let translatedText: String
+  let author: String?
 }

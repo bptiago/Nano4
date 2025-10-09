@@ -27,8 +27,19 @@ class HomeScreen: UIView {
   
   // MARK: - Subviews
   let cardColletionView: UICollectionView = {
-    let layout = UICollectionViewFlowLayout()
-    layout.scrollDirection = .vertical
+    let itemSize = NSCollectionLayoutSize(
+      widthDimension: .fractionalWidth(1.0),
+      heightDimension: .estimated(100) // will expand automatically
+    )
+    
+    let item = NSCollectionLayoutItem(layoutSize: itemSize)
+    let group = NSCollectionLayoutGroup.vertical(
+      layoutSize: itemSize,
+      subitems: [item]
+    )
+    let section = NSCollectionLayoutSection(group: group)
+    section.interGroupSpacing = 16
+    let layout = UICollectionViewCompositionalLayout(section: section)
     
     let view = UICollectionView(
       frame: .zero,
