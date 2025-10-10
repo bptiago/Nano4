@@ -33,12 +33,28 @@ class HomeScreen: UIView {
     )
     
     let item = NSCollectionLayoutItem(layoutSize: itemSize)
+    
     let group = NSCollectionLayoutGroup.vertical(
       layoutSize: itemSize,
       subitems: [item]
     )
+    
+    let headerSize = NSCollectionLayoutSize(
+        widthDimension: .fractionalWidth(1.0),
+        heightDimension: .estimated(200)
+    )
+    
+    let header = NSCollectionLayoutBoundarySupplementaryItem(
+        layoutSize: headerSize,
+        elementKind: UICollectionView.elementKindSectionHeader,
+        alignment: .top
+    )
+    
     let section = NSCollectionLayoutSection(group: group)
+    section.boundarySupplementaryItems = [header]
     section.interGroupSpacing = 16
+    section.contentInsets.top = 16
+    
     let layout = UICollectionViewCompositionalLayout(section: section)
     
     let view = UICollectionView(
@@ -58,6 +74,12 @@ class HomeScreen: UIView {
       TranslationCell.self,
       forCellWithReuseIdentifier: TranslationCell.identifier
     )
+    
+    cardColletionView.register(
+      TranslationInput.self,
+      forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
+      withReuseIdentifier: TranslationInput.reuseIdentifier
+    )
   }
   
   private func addSubviews() {
@@ -66,7 +88,7 @@ class HomeScreen: UIView {
   
   private func setupConstraints() {
     NSLayoutConstraint.activate([
-      cardColletionView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
+      cardColletionView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 16),
       cardColletionView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
       cardColletionView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
       cardColletionView.bottomAnchor.constraint(equalTo: bottomAnchor)
