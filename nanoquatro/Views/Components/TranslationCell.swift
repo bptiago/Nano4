@@ -12,6 +12,8 @@ class TranslationCell: UICollectionViewCell {
   // MARK: - Initializers
   static let identifier: String = "TranslationCell"
   
+  var didPressPlay: () -> Void = {}
+  
   override init(frame: CGRect) {
     super.init(frame: frame)
     
@@ -77,8 +79,9 @@ class TranslationCell: UICollectionViewCell {
     )
     
     button.addAction(
-      UIAction(handler: { action in
-        print("oi")
+      UIAction(handler: { [weak self] _ in
+        guard let self = self else { return }
+        self.didPressPlay()
       }),
       for: .touchUpInside
     )

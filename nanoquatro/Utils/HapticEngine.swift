@@ -8,11 +8,6 @@
 import Foundation
 import CoreHaptics
 
-enum HapticType {
-  case dash
-  case dot
-}
-
 class HapticEngine {
   private var engine: CHHapticEngine!
   private var supportsHaptics: Bool
@@ -34,17 +29,20 @@ class HapticEngine {
   
   // Chamar quando der play
   func startEngine() throws {
+    if !supportsHaptics { return }
     try engine.start()
   }
   
   // Chamar quando terminar o código
   func stopEngine() {
+    if !supportsHaptics { return }
+    
     engine.notifyWhenPlayersFinished { error in
       return .stopEngine
     }
   }
   
-  func vibrate(with type: HapticType) {
+  func vibrate(for duration: TimeInterval) {
     if !supportsHaptics { return }
     
     do {
@@ -57,14 +55,14 @@ class HapticEngine {
           ),
         ],
         relativeTime: 0,
-        duration: type == .dash ? 0.8 : 0.2
+        duration: duration
       )
       let pattern = try CHHapticPattern(events: [event], parameters: [])
       let player = try engine.makePlayer(with: pattern)
       
       try player.start(atTime: 0)
     } catch {
-      print(error.localizedDescription)
+      print("Unable to active haptic feedback: \(error)")
     }
   }
   

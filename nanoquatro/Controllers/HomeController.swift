@@ -18,7 +18,6 @@ class HomeController: UIViewController {
   var dataSource: UICollectionViewDiffableDataSource<Section, TranslationInfo>!
   weak var translationInputHeader: TranslationInput?
   let communicator = MorseCommunicator()
-  let hapticEngine = HapticEngine()
   
   // MARK: - Lifecycle
   override func viewDidLoad() {
@@ -61,6 +60,20 @@ class HomeController: UIViewController {
         }
         
         cell.configure(with: item)
+        
+        cell.didPressPlay = { [weak self, weak cell] in
+          guard let self = self, let cell = cell else { return }
+          
+          let text = cell.morseText.text!
+          
+          Task {
+            do { try await self.communicator.play(text) }
+            catch {
+              // Mostrar aviso ou toast caso dê errado
+              print(error.localizedDescription)
+            }
+          }
+        }
         
         return cell
       }
@@ -155,19 +168,29 @@ extension HomeController: UITextViewDelegate {
     }
     
     guard let header = translationInputHeader else { return }
+    let inputText = textView.text!
+    let morseText = header.morseText.text!
     
     let item = TranslationInfo(
-      originalText: header.inputField.text,
-      translatedText: header.morseText.text!,
+      originalText: inputText,
+      translatedText: morseText,
       author: nil
     )
     
     updateSnapshot(with: item)
+    
+    Task {
+      do {
+        try await communicator.play(morseText)
+      } catch {
+        // Mostrar aviso ou toast caso dê errado
+        print(error.localizedDescription)
+      }
+    }
+    
     resetInputField()
     resetMorseText()
     updateView() // -> Precisa se não a view fica expandida após inserir textos grandes
-    
-    hapticEngine.vibrate(with: .dash)
   }
   
   func textView(
