@@ -17,7 +17,8 @@ class HomeController: UIViewController {
   let homeView = HomeScreen()
   var dataSource: UICollectionViewDiffableDataSource<Section, TranslationInfo>!
   weak var translationInputHeader: TranslationInput?
-  let morseEncoder = MorseEncoder()
+  let communicator = MorseCommunicator()
+  let hapticEngine = HapticEngine()
   
   // MARK: - Lifecycle
   override func viewDidLoad() {
@@ -133,7 +134,7 @@ extension HomeController: UITextViewDelegate {
     
     guard let text = textView.text else { return }
     
-    let morse = morseEncoder.encode(text)
+    let morse = communicator.encode(text)
     translationInputHeader?.morseText.textColor = .appAccent
     translationInputHeader?.morseText.text = morse
     updateView()
@@ -165,6 +166,8 @@ extension HomeController: UITextViewDelegate {
     resetInputField()
     resetMorseText()
     updateView() // -> Precisa se não a view fica expandida após inserir textos grandes
+    
+    hapticEngine.vibrate(with: .dash)
   }
   
   func textView(

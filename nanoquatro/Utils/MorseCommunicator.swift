@@ -7,7 +7,15 @@
 
 import Foundation
 
-class MorseEncoder {
+protocol Communicator {
+  func encode(_ text: String) -> String
+//  func play(_ text: String) -> Void
+//  func decode(_ text: String) -> String
+//  func send() -> TranslationInfo
+}
+
+class MorseCommunicator: Communicator {
+  private var hapticEngine = HapticEngine()
   private let chars: [Character: String] = [
     "A": ".-",    "B": "-...",  "C": "-.-.",
     "D": "-..",   "E": ".",     "F": "..-.",
