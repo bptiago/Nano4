@@ -109,6 +109,7 @@ class TranslationCell: UICollectionViewCell {
       
       originalText.topAnchor.constraint(equalTo: originalLabel.bottomAnchor, constant: 8),
       originalText.leadingAnchor.constraint(equalTo: originalLabel.leadingAnchor),
+      originalText.trailingAnchor.constraint(equalTo: originalLabel.trailingAnchor),
       
       divider.heightAnchor.constraint(equalToConstant: 0.5),
       divider.topAnchor.constraint(equalTo: originalText.bottomAnchor, constant: 16),

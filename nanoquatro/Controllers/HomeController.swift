@@ -17,6 +17,7 @@ class HomeController: UIViewController {
   let homeView = HomeScreen()
   var dataSource: UICollectionViewDiffableDataSource<Section, TranslationInfo>!
   weak var translationInputHeader: TranslationInput?
+  let morseEncoder = MorseEncoder()
   
   // MARK: - Lifecycle
   override func viewDidLoad() {
@@ -84,21 +85,23 @@ class HomeController: UIViewController {
   private func applyInitialSnapshot() {
     var snapshot = NSDiffableDataSourceSnapshot<Section, TranslationInfo>()
     snapshot.appendSections([.main])
-    snapshot.appendItems(
-      [
-        TranslationInfo(
-          originalText: "Asd",
-          translatedText: "...---...",
-          author: nil
-        )
-      ]
-    )
     dataSource.apply(snapshot, animatingDifferences: false)
+  }
+  
+  private func updateSnapshot(with item: TranslationInfo) {
+    var snapshot = dataSource.snapshot()
+    snapshot.appendItems([item], toSection: .main)
+    dataSource.apply(snapshot, animatingDifferences: true)
   }
   
   private func resetMorseText() {
     translationInputHeader?.morseText.text = "..."
     translationInputHeader?.morseText.textColor = .appAccentPlaceholder
+  }
+  
+  private func resetInputField() {
+    translationInputHeader?.inputField.textColor = .appFontPlaceholder
+    translationInputHeader?.inputField.text = "Digite o texto"
   }
   
   private func updateView() {
@@ -129,8 +132,10 @@ extension HomeController: UITextViewDelegate {
     }
     
     guard let text = textView.text else { return }
+    
+    let morse = morseEncoder.encode(text)
     translationInputHeader?.morseText.textColor = .appAccent
-    translationInputHeader?.morseText.text = text
+    translationInputHeader?.morseText.text = morse
     updateView()
   }
   
@@ -138,14 +143,28 @@ extension HomeController: UITextViewDelegate {
     if textView.textColor == .appFontPlaceholder {
       textView.text = nil
       textView.textColor = .appFont
+      return
     }
   }
   
   func textViewDidEndEditing(_ textView: UITextView) {
     if textView.text.isEmpty {
-      textView.textColor = .appFontPlaceholder
-      textView.text = "Digite o texto"
+      resetInputField()
+      return
     }
+    
+    guard let header = translationInputHeader else { return }
+    
+    let item = TranslationInfo(
+      originalText: header.inputField.text,
+      translatedText: header.morseText.text!,
+      author: nil
+    )
+    
+    updateSnapshot(with: item)
+    resetInputField()
+    resetMorseText()
+    updateView() // -> Precisa se não a view fica expandida após inserir textos grandes
   }
   
   func textView(

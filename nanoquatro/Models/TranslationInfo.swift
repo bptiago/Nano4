@@ -7,7 +7,8 @@
 
 import Foundation
 
-struct TranslationInfo: Hashable {
+struct TranslationInfo: Identifiable, Hashable {
+  let id = UUID()
   let originalText: String
   let translatedText: String
   let author: String?
