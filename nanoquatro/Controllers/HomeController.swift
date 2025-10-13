@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import MultipeerConnectivity
 
 enum Section {
   case main
@@ -18,6 +19,7 @@ class HomeController: UIViewController {
   var dataSource: UICollectionViewDiffableDataSource<Section, TranslationInfo>!
   weak var translationInputHeader: TranslationInput?
   let communicator = MorseCommunicator()
+  var multipeerSession = MultipeerSession()
   
   // MARK: - Lifecycle
   override func viewDidLoad() {
@@ -46,6 +48,25 @@ class HomeController: UIViewController {
     
     navigationController?.navigationBar.standardAppearance = appearance
     navigationController?.navigationBar.scrollEdgeAppearance = appearance
+    
+    let peerListItem = UIBarButtonItem(
+      image: UIImage(systemName: "person.2.circle.fill"),
+      style: .plain,
+      target: self,
+      action: #selector(showPeerList)
+    )
+    peerListItem.tintColor = .appAccent
+    navigationItem.rightBarButtonItem = peerListItem
+  }
+  
+  @objc
+  private func showPeerList() {
+    let vc = MCBrowserViewController(
+      serviceType: multipeerSession.serviceType,
+      session: multipeerSession.session
+    )
+    vc.delegate = self
+    present(vc, animated: true)
   }
   
   private func configureDataSource() {
@@ -140,6 +161,18 @@ class HomeController: UIViewController {
       self.homeView.cardColletionView.collectionViewLayout.invalidateLayout()
       self.homeView.cardColletionView.layoutIfNeeded()
     }
+  }
+  
+}
+
+extension HomeController: MCBrowserViewControllerDelegate {
+  
+  func browserViewControllerDidFinish(_ browserViewController: MCBrowserViewController) {
+    dismiss(animated: true)
+  }
+  
+  func browserViewControllerWasCancelled(_ browserViewController: MCBrowserViewController) {
+    dismiss(animated: true)
   }
   
 }
