@@ -11,6 +11,8 @@ import UIKit
 class TranslationInput: UICollectionReusableView {
   static let reuseIdentifier = "TranslationInput"
 
+  var didPressFinish: () -> Void = {}
+  
   override init(frame: CGRect) {
     super.init(frame: frame)
     
@@ -80,18 +82,20 @@ class TranslationInput: UICollectionReusableView {
     return view
   }()
   
-  lazy var playButton: UIButton = {
+  lazy var saveButton: UIButton = {
     let button = UIButton(type: .system)
     button.tintColor = .appAccent
     button.translatesAutoresizingMaskIntoConstraints = false
     button.setImage(
-      UIImage(systemName: "play.circle.fill"),
+      UIImage(systemName: "checkmark.circle.fill"),
       for: .normal
     )
+    button.isEnabled = false
     
     button.addAction(
-      UIAction(handler: { action in
-        print("oi")
+      UIAction(handler: { [weak self] _ in
+        guard let self = self else { return }
+        self.didPressFinish()
       }),
       for: .touchUpInside
     )
@@ -110,7 +114,7 @@ class TranslationInput: UICollectionReusableView {
     addSubview(divider)
     addSubview(morseLabel)
     addSubview(morseText)
-    addSubview(playButton)
+    addSubview(saveButton)
   }
   
   private func setupConstraints() {
@@ -137,8 +141,8 @@ class TranslationInput: UICollectionReusableView {
       morseText.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -60),
       morseText.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -16),
       
-      playButton.centerYAnchor.constraint(equalTo: morseText.centerYAnchor),
-      playButton.trailingAnchor.constraint(equalTo: originalLabel.trailingAnchor),
+      saveButton.centerYAnchor.constraint(equalTo: morseText.centerYAnchor),
+      saveButton.trailingAnchor.constraint(equalTo: originalLabel.trailingAnchor),
     ])
   }
 }

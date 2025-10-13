@@ -58,21 +58,11 @@ class HomeController: UIViewController {
         ) as? TranslationCell else {
           fatalError("Could not dequeue cell")
         }
-        
         cell.configure(with: item)
-        
         cell.didPressPlay = { [weak self, weak cell] in
           guard let self = self, let cell = cell else { return }
-          
           let text = cell.morseText.text!
-          
-          Task {
-            do { try await self.communicator.play(text) }
-            catch {
-              // Mostrar aviso ou toast caso dê errado
-              print(error.localizedDescription)
-            }
-          }
+          playMorseInHaptic(with: text)
         }
         
         return cell
@@ -90,10 +80,33 @@ class HomeController: UIViewController {
       
       header.inputField.delegate = self
       self.translationInputHeader = header
+      header.didPressFinish = { [weak self, weak header] in
+        guard let self = self, let header = header else { return }
+        guard let morseText = header.morseText.text, let inputText = header.inputField.text else { return }
+        if morseText.isEmpty { return }
+        
+        let item = TranslationInfo(originalText: inputText, translatedText: morseText, author: nil)
+        
+        updateSnapshot(with: item)
+        resetInputField()
+        resetMorseText()
+        translationInputHeader?.saveButton.isEnabled = false
+        view.endEditing(true)
+      }
       
       return header
     }
     
+  }
+  
+  private func playMorseInHaptic(with text: String) {
+    Task {
+      do { try await self.communicator.play(text) }
+      catch {
+        // Mostrar aviso ou toast caso dê errado
+        print(error.localizedDescription)
+      }
+    }
   }
   
   private func applyInitialSnapshot() {
@@ -103,6 +116,10 @@ class HomeController: UIViewController {
   }
   
   private func updateSnapshot(with item: TranslationInfo) {
+    if item.originalText == "Digite o texto" || item.translatedText == "..." {
+      return
+    }
+    
     var snapshot = dataSource.snapshot()
     snapshot.appendItems([item], toSection: .main)
     dataSource.apply(snapshot, animatingDifferences: true)
@@ -141,6 +158,7 @@ extension HomeController: UITextViewDelegate {
   
   func textViewDidChange(_ textView: UITextView) {
     if textView.text.isEmpty {
+      translationInputHeader?.saveButton.isEnabled = false
       resetMorseText()
       return
     }
@@ -148,6 +166,7 @@ extension HomeController: UITextViewDelegate {
     guard let text = textView.text else { return }
     
     let morse = communicator.encode(text)
+    translationInputHeader?.saveButton.isEnabled = true
     translationInputHeader?.morseText.textColor = .appAccent
     translationInputHeader?.morseText.text = morse
     updateView()
@@ -178,18 +197,9 @@ extension HomeController: UITextViewDelegate {
     )
     
     updateSnapshot(with: item)
-    
-    Task {
-      do {
-        try await communicator.play(morseText)
-      } catch {
-        // Mostrar aviso ou toast caso dê errado
-        print(error.localizedDescription)
-      }
-    }
-    
     resetInputField()
     resetMorseText()
+    translationInputHeader?.saveButton.isEnabled = false
     updateView() // -> Precisa se não a view fica expandida após inserir textos grandes
   }
   
