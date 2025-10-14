@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-class HomeScreen: UIView {
+class HomeView: UIView {
   // MARK: - Initializers
   
   override init(frame: CGRect) {

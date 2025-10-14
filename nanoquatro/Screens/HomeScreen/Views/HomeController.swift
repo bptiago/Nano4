@@ -14,7 +14,7 @@ enum Section {
 class HomeController: UIViewController {
   
   // MARK: - Properties
-  let homeView = HomeScreen()
+  let homeView = HomeView()
   var dataSource: UICollectionViewDiffableDataSource<Section, TranslationInfo>!
   weak var translationInputHeader: TranslationInput?
   let communicator = MorseCommunicator()
