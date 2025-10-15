@@ -54,7 +54,9 @@ class MorseCommunicator: Communicator {
   }
   
   func play(_ text: String) async throws {
+    userSettings.reloadUserSettings()
     setUnit(userSettings.getDitDuration()) // Sempre usar o valor mais recente no UserDefaults
+    
     try hapticEngine.startEngine()
     
     for c in text {

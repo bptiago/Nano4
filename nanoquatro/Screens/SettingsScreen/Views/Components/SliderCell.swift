@@ -30,7 +30,7 @@ class SliderCell: UITableViewCell {
   lazy var slider: UISlider = {
     let view = UISlider()
     view.minimumValue = 0.05
-    view.maximumValue = 0.5
+    view.maximumValue = 0.3
     view.translatesAutoresizingMaskIntoConstraints = false
     view.tintColor = .appAccent
     

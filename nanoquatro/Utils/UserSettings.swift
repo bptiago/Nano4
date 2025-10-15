@@ -29,13 +29,17 @@ class UserSettings {
     self.useVibration = userDefaults.bool(forKey: useVibrationKey)
   }
   
-  func updateDitDuration(with value: Double) {
+  func reloadUserSettings() {
+    self.ditDuration = userDefaults.object(forKey: ditDurationKey) as! Double
+    self.useVibration = userDefaults.bool(forKey: useVibrationKey)
+  }
+  
+  func setDitDuration(with value: Double) {
     if value <= 0 { return }
-    
     userDefaults.set(value, forKey: ditDurationKey)
   }
   
-  func useVibrationForMorse(with value: Bool) {
+  func setUseVibration(with value: Bool) {
     userDefaults.set(value, forKey: useVibrationKey)
   }
   
