@@ -28,34 +28,24 @@ class TranslationCell: UICollectionViewCell {
   }
   
   // MARK: - Subviews
-  private func createLabel(
-    text: String = "",
-    fontSize: CGFloat = 16,
-    fontColor: UIColor = .appFont
-  ) -> UILabel {
-    let view = UILabel()
-    
-    view.font = .systemFont(ofSize: fontSize, weight: .semibold)
-    view.text = text
-    view.textColor = fontColor
-    view.translatesAutoresizingMaskIntoConstraints = false
-    
-    return view
-  }
-  
-  private(set) lazy var originalLabel: UILabel = createLabel(text: "Texto original")
+  private(set) lazy var originalLabel: UILabel = Styles.createLabel(
+    text: "Texto original"
+  )
   
   private(set) lazy var originalText: UILabel = {
-    let view = createLabel(fontSize: 24)
+    let view = Styles.createLabel(fontSize: 24)
     view.numberOfLines = 0
     
     return view
   }()
   
-  private(set) lazy var morseLabel: UILabel = createLabel(text: "Código morse", fontColor: .appAccent)
+  private(set) lazy var morseLabel: UILabel = Styles.createLabel(
+    text: "Código morse",
+    fontColor: .appAccent
+  )
   
   private(set) lazy var morseText: UILabel = {
-    let view = createLabel(fontSize: 24, fontColor: .appAccent)
+    let view = Styles.createLabel(fontSize: 24, fontColor: .appAccent)
     view.numberOfLines = 0
     
     return view

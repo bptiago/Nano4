@@ -27,22 +27,9 @@ class TranslationInput: UICollectionReusableView {
   }
   
   // MARK: - Subviews
-  private func createLabel(
-    text: String = "",
-    fontSize: CGFloat = 16,
-    fontColor: UIColor = .appFont
-  ) -> UILabel {
-    let view = UILabel()
-    
-    view.font = .systemFont(ofSize: fontSize, weight: .semibold)
-    view.text = text
-    view.textColor = fontColor
-    view.translatesAutoresizingMaskIntoConstraints = false
-    
-    return view
-  }
-  
-  private(set) lazy var originalLabel: UILabel = createLabel(text: "Texto original")
+  private(set) lazy var originalLabel: UILabel = Styles.createLabel(
+    text: "Texto original"
+  )
   
   lazy var inputField: UITextView = {
     let view = UITextView()
@@ -65,10 +52,17 @@ class TranslationInput: UICollectionReusableView {
     return view
   }()
     
-  private(set) lazy var morseLabel: UILabel = createLabel(text: "Código morse", fontColor: .appAccent)
+  private(set) lazy var morseLabel: UILabel = Styles.createLabel(
+    text: "Código morse",
+    fontColor: .appAccent
+  )
   
   lazy var morseText: UILabel = {
-    let view = createLabel(text: "...", fontSize: 24, fontColor: .appAccentPlaceholder)
+    let view = Styles.createLabel(
+      text: "...",
+      fontSize: 24,
+      fontColor: .appAccentPlaceholder
+    )
     view.numberOfLines = 0
     
     return view
