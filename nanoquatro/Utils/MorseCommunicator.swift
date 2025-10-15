@@ -16,6 +16,7 @@ protocol Communicator {
 
 class MorseCommunicator: Communicator {
   private var hapticEngine = HapticEngine()
+  private var userSettings = UserSettings()
   private let chars: [Character: String] = [
     "A": ".-",    "B": "-...",  "C": "-.-.",
     "D": "-..",   "E": ".",     "F": "..-.",
@@ -34,7 +35,11 @@ class MorseCommunicator: Communicator {
   
   // Real Morse timing (i.e. dot = 1 unit, dash = 3 units,
   // inter-letter = 3 units, inter-word = 7 units)
-  private var unit: Double = 0.1 // base time
+  private var unit: Double// base time
+  
+  init() {
+    self.unit = userSettings.getDitDuration()
+  }
   
   func setUnit(_ unit: Double) {
     self.unit = unit
@@ -49,6 +54,7 @@ class MorseCommunicator: Communicator {
   }
   
   func play(_ text: String) async throws {
+    setUnit(userSettings.getDitDuration()) // Sempre usar o valor mais recente no UserDefaults
     try hapticEngine.startEngine()
     
     for c in text {

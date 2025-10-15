@@ -15,9 +15,9 @@ class HomeController: UIViewController {
   
   // MARK: - Properties
   let homeView = HomeView()
+  let communicator = MorseCommunicator()
   var dataSource: UICollectionViewDiffableDataSource<Section, TranslationInfo>!
   weak var translationInputHeader: TranslationInput?
-  let communicator = MorseCommunicator()
   
   // MARK: - Lifecycle
   override func viewDidLoad() {

@@ -27,7 +27,7 @@ class ToggleCell: UITableViewCell {
   }
   
   // MARK: - Subviews
-  var titleLabel: UILabel = Styles.createLabel(text: "Áudio")
+  var titleLabel: UILabel = Styles.createLabel(text: "Vibração")
   
   var toggleSwitch: UISwitch = {
     let view = UISwitch()
@@ -38,6 +38,10 @@ class ToggleCell: UITableViewCell {
   }()
   
   // MARK: - Setup Methods
+  func configure(with shouldVibrate: Bool) {
+    toggleSwitch.isOn = shouldVibrate
+  }
+  
   private func addSubviews() {
     contentView.addSubview(titleLabel)
     contentView.addSubview(toggleSwitch)
