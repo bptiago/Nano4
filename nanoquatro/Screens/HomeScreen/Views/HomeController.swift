@@ -34,10 +34,14 @@ class HomeController: UIViewController {
     self.view = homeView
   }
   
+  override func viewWillAppear(_ animated: Bool) {
+    super.viewWillAppear(animated)
+    navigationController?.navigationBar.prefersLargeTitles = true
+    navigationController?.navigationBar.topItem?.largeTitleDisplayMode = .always
+  }
+  
   private func configureNavigationBar() {
     title = "Traduzir"
-    navigationController?.navigationBar.prefersLargeTitles = true
-    navigationController?.navigationBar.topItem?.largeTitleDisplayMode = .automatic
     
     let appearance = UINavigationBarAppearance()
     appearance.largeTitleTextAttributes = [.foregroundColor: UIColor.appFont]
@@ -46,6 +50,23 @@ class HomeController: UIViewController {
     
     navigationController?.navigationBar.standardAppearance = appearance
     navigationController?.navigationBar.scrollEdgeAppearance = appearance
+    navigationController?.navigationBar.tintColor = .appAccent
+    
+    let settingsButton = UIBarButtonItem(
+      image: UIImage(systemName: "gear"),
+      style: .plain,
+      target: self,
+      action: #selector(didClickSettingsButton)
+    )
+    settingsButton.tintColor = .appAccent
+    
+    navigationItem.rightBarButtonItem = settingsButton
+  }
+  
+  @objc
+  private func didClickSettingsButton() {
+    let vc = SettingsController()
+    navigationController?.pushViewController(vc, animated: true)
   }
   
   private func configureDataSource() {
