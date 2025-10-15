@@ -38,7 +38,8 @@ class SettingsView: UIView {
   
   // MARK: - Setup Methods
   private func setupTableView() {
-    tableView.register(SettingsCell.self, forCellReuseIdentifier: SettingsCell.reuseIdentifier)
+    tableView.register(SliderCell.self, forCellReuseIdentifier: SliderCell.reuseIdentifier)
+    tableView.register(ToggleCell.self, forCellReuseIdentifier: ToggleCell.reuseIdentifier)
   }
   
   private func addSubviews() {

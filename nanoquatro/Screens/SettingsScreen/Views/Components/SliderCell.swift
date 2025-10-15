@@ -8,8 +8,8 @@
 import Foundation
 import UIKit
 
-class SettingsCell: UITableViewCell {
-  static let reuseIdentifier = "SettingsCell"
+class SliderCell: UITableViewCell {
+  static let reuseIdentifier = "SliderCell"
   
   // MARK: - Initializers
   
