@@ -16,6 +16,7 @@ class HomeController: UIViewController {
   // MARK: - Properties
   let homeView = HomeView()
   let communicator = MorseCommunicator()
+  let audio = AudioEngine()
   var dataSource: UICollectionViewDiffableDataSource<Section, TranslationInfo>!
   weak var translationInputHeader: TranslationInput?
   
@@ -66,7 +67,8 @@ class HomeController: UIViewController {
   @objc
   private func didClickSettingsButton() {
     let vc = SettingsController()
-    navigationController?.pushViewController(vc, animated: true)
+    audio.play()
+//    navigationController?.pushViewController(vc, animated: true)
   }
   
   private func configureDataSource() {
