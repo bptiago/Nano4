@@ -8,7 +8,7 @@
 import Foundation
 import CoreHaptics
 
-class HapticEngine {
+class HapticPlayer: Playable {
   private var engine: CHHapticEngine!
   private var supportsHaptics: Bool
   
@@ -27,13 +27,16 @@ class HapticEngine {
     }
   }
   
-  // Chamar quando der play
-  func startEngine() throws {
+  func startEngine() {
     if !supportsHaptics { return }
-    try engine.start()
+
+    do {
+      try engine.start()
+    } catch {
+      print(error.localizedDescription)
+    }
   }
   
-  // Chamar quando terminar o código
   func stopEngine() {
     if !supportsHaptics { return }
     
@@ -42,9 +45,9 @@ class HapticEngine {
     }
   }
   
-  func vibrate(for duration: TimeInterval) {
+  func play(for duration: TimeInterval) {
     if !supportsHaptics { return }
-    
+
     do {
       let event = CHHapticEvent(
         eventType: .hapticContinuous,

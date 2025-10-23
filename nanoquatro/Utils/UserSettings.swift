@@ -15,7 +15,7 @@ class UserSettings {
   private let useVibrationKey = "useVibration"
   
   private var ditDuration: Double
-  private var useVibration: Bool
+  private var shouldUseVibration: Bool
   
   init () {
     let hasUsedAppBefore = userDefaults.bool(forKey: hasUsedAppBeforeKey)
@@ -26,12 +26,12 @@ class UserSettings {
     }
 
     self.ditDuration = userDefaults.object(forKey: ditDurationKey) as! Double
-    self.useVibration = userDefaults.bool(forKey: useVibrationKey)
+    self.shouldUseVibration = userDefaults.bool(forKey: useVibrationKey)
   }
   
   func reloadUserSettings() {
     self.ditDuration = userDefaults.object(forKey: ditDurationKey) as! Double
-    self.useVibration = userDefaults.bool(forKey: useVibrationKey)
+    self.shouldUseVibration = userDefaults.bool(forKey: useVibrationKey)
   }
   
   func setDitDuration(with value: Double) {
@@ -39,7 +39,7 @@ class UserSettings {
     userDefaults.set(value, forKey: ditDurationKey)
   }
   
-  func setUseVibration(with value: Bool) {
+  func setShouldUseVibration(with value: Bool) {
     userDefaults.set(value, forKey: useVibrationKey)
   }
   
@@ -47,8 +47,8 @@ class UserSettings {
     return ditDuration
   }
   
-  func getUseVibration() -> Bool {
-    return useVibration
+  func getShouldUseVibration() -> Bool {
+    return shouldUseVibration
   }
   
 }

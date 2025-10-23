@@ -50,7 +50,7 @@ class SettingsController: UIViewController {
     let useVibration: Bool = toggle.isOn
     
     userSettings.setDitDuration(with: ditDuration)
-    userSettings.setUseVibration(with: useVibration)
+    userSettings.setShouldUseVibration(with: useVibration)
     dismiss(animated: true)
   }
 }
@@ -78,7 +78,7 @@ extension SettingsController: UITableViewDataSource {
       
       self.toggleCell = cell
       
-      cell.configure(with: userSettings.getUseVibration())
+      cell.configure(with: userSettings.getShouldUseVibration())
       return cell
     } else {
       guard let cell = tableView.dequeueReusableCell(withIdentifier: SliderCell.reuseIdentifier) as? SliderCell else {

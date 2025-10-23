@@ -10,7 +10,7 @@ import AudioKit
 import SoundpipeAudioKit
 import AVFoundation
 
-class AudioPlayer: HasAudioEngine {
+class AudioPlayer: HasAudioEngine, Playable {
   let engine = AudioEngine()
   var oscillator = Oscillator()
   
@@ -20,7 +20,7 @@ class AudioPlayer: HasAudioEngine {
     engine.output = oscillator
   }
   
-  func play() {
+  func play(for duration: TimeInterval) {
     callSession()
     startEngine()
     oscillator.start()
@@ -31,7 +31,7 @@ class AudioPlayer: HasAudioEngine {
     engine.stop()
   }
   
-  private func startEngine() {
+  func startEngine() {
     do {
       try engine.start()
     } catch {
@@ -39,7 +39,7 @@ class AudioPlayer: HasAudioEngine {
     }
   }
   
-  private func stopEngine() {
+  func stopEngine() {
     engine.stop()
   }
   

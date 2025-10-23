@@ -7,15 +7,8 @@
 
 import Foundation
 
-protocol Communicator {
-  func encode(_ text: String) -> String
-  func play(_ text: String) async throws -> Void
-  //  func decode(_ text: String) -> String
-  //  func send() -> TranslationInfo
-}
-
 class MorseCommunicator: Communicator {
-  private var hapticEngine = HapticEngine()
+  private var hapticEngine = HapticPlayer()
   private var userSettings = UserSettings()
   private let chars: [Character: String] = [
     "A": ".-",    "B": "-...",  "C": "-.-.",
@@ -57,15 +50,15 @@ class MorseCommunicator: Communicator {
     userSettings.reloadUserSettings()
     setUnit(userSettings.getDitDuration()) // Sempre usar o valor mais recente no UserDefaults
     
-    try hapticEngine.startEngine()
+    hapticEngine.startEngine()
     
     for c in text {
       switch c {
       case "-":
-        hapticEngine.vibrate(for: 3 * unit)
+        hapticEngine.play(for: 3 * unit)
         try await Task.sleep(nanoseconds: UInt64(unit * 3 * 1_000_000_000))
       case ".":
-        hapticEngine.vibrate(for: unit)
+        hapticEngine.play(for: unit)
         try await Task.sleep(nanoseconds: UInt64(unit * 1 * 1_000_000_000))
       case " ":
         try await Task.sleep(nanoseconds: UInt64(unit * 7 * 1_000_000_000))
