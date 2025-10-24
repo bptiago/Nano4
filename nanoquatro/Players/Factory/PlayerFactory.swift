@@ -11,9 +11,9 @@ class PlayerFactory {
   
   private let userSettings = UserSettings()
   
-  func createEngine() -> Playable {
+  func createPlayer() throws -> Playable {
     let shouldUseVibration = userSettings.getShouldUseVibration()
-    return shouldUseVibration ? HapticPlayer() : AudioPlayer()
+    return shouldUseVibration ? try HapticPlayer() : AudioPlayer()
   }
   
 }

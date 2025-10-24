@@ -8,7 +8,6 @@
 import Foundation
 
 class MorseCommunicator: Communicator {
-  private var hapticEngine = HapticPlayer()
   private var userSettings = UserSettings()
   private let chars: [Character: String] = [
     "A": ".-",    "B": "-...",  "C": "-.-.",
@@ -48,26 +47,28 @@ class MorseCommunicator: Communicator {
   
   func play(_ text: String) async throws {
     userSettings.reloadUserSettings()
-    setUnit(userSettings.getDitDuration()) // Sempre usar o valor mais recente no UserDefaults
+    setUnit(userSettings.getDitDuration())
     
-    hapticEngine.startEngine()
+    let factory = PlayerFactory()
+    let player = try factory.createPlayer()
     
     for c in text {
+      try player.startEngine()
       switch c {
       case "-":
-        hapticEngine.play(for: 3 * unit)
+        try player.play(for: 3 * unit)
+        // MARK: Maybe use delay inside play function
         try await Task.sleep(nanoseconds: UInt64(unit * 3 * 1_000_000_000))
       case ".":
-        hapticEngine.play(for: unit)
+        try player.play(for: unit)
         try await Task.sleep(nanoseconds: UInt64(unit * 1 * 1_000_000_000))
       case " ":
         try await Task.sleep(nanoseconds: UInt64(unit * 7 * 1_000_000_000))
       default: continue
       }
-      
-      try await Task.sleep(nanoseconds: UInt64(unit * 2 * 1_000_000_000))
+      player.stopEngine()
+      try await Task.sleep(nanoseconds: UInt64(unit * 3 * 1_000_000_000))
     }
     
-    hapticEngine.stopEngine()
   }
 }

@@ -12,42 +12,22 @@ class HapticPlayer: Playable {
   private var engine: CHHapticEngine!
   private var supportsHaptics: Bool
   
-  init() {
+  init() throws {
     let capabilities = CHHapticEngine.capabilitiesForHardware()
     self.supportsHaptics = capabilities.supportsHaptics
     
-    if supportsHaptics {
-      do {
-        engine = try CHHapticEngine()
-        resetHandler()
-        stopHandler()
-      } catch let error {
-        fatalError("Engine Creation Error: \(error)")
-      }
-    }
-  }
-  
-  func startEngine() {
-    if !supportsHaptics { return }
-
-    do {
-      try engine.start()
-    } catch {
-      print(error.localizedDescription)
-    }
-  }
-  
-  func stopEngine() {
-    if !supportsHaptics { return }
+    guard supportsHaptics else { throw PlayerException.hapticsNotSupported }
     
-    engine.notifyWhenPlayersFinished { error in
-      return .stopEngine
+    do {
+      engine = try CHHapticEngine()
+      resetHandler()
+      stopHandler()
+    } catch {
+      throw PlayerException.failedToCreateEngine
     }
   }
   
-  func play(for duration: TimeInterval) {
-    if !supportsHaptics { return }
-
+  func play(for duration: TimeInterval) throws {
     do {
       let event = CHHapticEvent(
         eventType: .hapticContinuous,
@@ -62,10 +42,23 @@ class HapticPlayer: Playable {
       )
       let pattern = try CHHapticPattern(events: [event], parameters: [])
       let player = try engine.makePlayer(with: pattern)
-      
       try player.start(atTime: 0)
     } catch {
-      print("Unable to active haptic feedback: \(error)")
+      throw PlayerException.failedToPlay
+    }
+  }
+  
+  func startEngine() throws {
+    do {
+      try engine.start()
+    } catch {
+      throw PlayerException.failedToStartEngine
+    }
+  }
+  
+  func stopEngine() {
+    engine.notifyWhenPlayersFinished { error in
+      return .stopEngine
     }
   }
   

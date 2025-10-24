@@ -8,7 +8,9 @@
 import Foundation
 
 protocol Playable {
-  func play(for duration: TimeInterval)
-  func startEngine()
+  func play(for duration: TimeInterval) throws
+  // MARK: CALLED ON MORSECOMMUNICATOR
+  func startEngine() throws
+  // MARK: CALLED ON MORSECOMMUNICATOR
   func stopEngine()
 }

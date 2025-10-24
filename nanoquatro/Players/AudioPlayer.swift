@@ -20,36 +20,34 @@ class AudioPlayer: HasAudioEngine, Playable {
     engine.output = oscillator
   }
   
-  func play(for duration: TimeInterval) {
-    callSession()
-    startEngine()
+  func play(for duration: TimeInterval) throws {
+    try callSession()
     oscillator.start()
+    // MARK: Maybe create await here with duration
   }
   
-  func stop() {
-    oscillator.stop()
-    engine.stop()
-  }
-  
-  func startEngine() {
+  func startEngine() throws {
     do {
       try engine.start()
     } catch {
-      print(error.localizedDescription)
+      throw PlayerException.failedToStartEngine
     }
   }
   
   func stopEngine() {
+    oscillator.stop()
     engine.stop()
   }
   
-  private func callSession() {
+  
+  // MARK: Maybe add to init
+  private func callSession() throws {
     let session = AVAudioSession.sharedInstance()
     do {
       try session.setCategory(.playback, options: [.mixWithOthers])
       try session.setActive(true)
     } catch {
-      print("Audio session error: \(error.localizedDescription)")
+      throw PlayerException.failedToConfigureSession
     }
   }
   
