@@ -35,8 +35,9 @@ class TranslationInput: UICollectionReusableView {
     let view = UITextView()
     
     view.translatesAutoresizingMaskIntoConstraints = false
+    view.adjustsFontForContentSizeCategory = true
     
-    view.font = .systemFont(ofSize: 24, weight: .semibold)
+    view.font = .preferredFont(forTextStyle: .title2)
     view.textAlignment = .natural
     view.textContainerInset = .zero
     view.textContainer.lineFragmentPadding = 0
@@ -60,7 +61,7 @@ class TranslationInput: UICollectionReusableView {
   lazy var morseText: UILabel = {
     let view = Styles.createLabel(
       text: "...",
-      fontSize: 24,
+      fontSize: .title2,
       fontColor: .appAccentPlaceholder
     )
     view.numberOfLines = 0
@@ -77,14 +78,21 @@ class TranslationInput: UICollectionReusableView {
   }()
   
   lazy var saveButton: UIButton = {
-    let button = UIButton(type: .system)
+    var button = UIButton(type: .system)
     button.tintColor = .appAccent
+    button.isEnabled = false
     button.translatesAutoresizingMaskIntoConstraints = false
+    button.adjustsImageSizeForAccessibilityContentSizeCategory = false
+    
+    button.setPreferredSymbolConfiguration(
+        UIImage.SymbolConfiguration(pointSize: 24, weight: .regular),
+        forImageIn: .normal
+    )
+    
     button.setImage(
       UIImage(systemName: "checkmark.circle.fill"),
       for: .normal
     )
-    button.isEnabled = false
     
     button.addAction(
       UIAction(handler: { [weak self] _ in

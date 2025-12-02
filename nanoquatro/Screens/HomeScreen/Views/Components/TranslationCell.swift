@@ -33,7 +33,7 @@ class TranslationCell: UICollectionViewCell {
   )
   
   private(set) lazy var originalText: UILabel = {
-    let view = Styles.createLabel(fontSize: 24)
+    let view = Styles.createLabel(fontSize: .title2)
     view.numberOfLines = 0
     
     return view
@@ -45,7 +45,7 @@ class TranslationCell: UICollectionViewCell {
   )
   
   private(set) lazy var morseText: UILabel = {
-    let view = Styles.createLabel(fontSize: 24, fontColor: .appAccent)
+    let view = Styles.createLabel(fontSize: .title2, fontColor: .appAccent)
     view.numberOfLines = 0
     
     return view
@@ -60,9 +60,16 @@ class TranslationCell: UICollectionViewCell {
   }()
   
   lazy var playButton: UIButton = {
-    let button = UIButton(type: .system)
+    var button = UIButton(type: .system)
     button.tintColor = .appAccent
     button.translatesAutoresizingMaskIntoConstraints = false
+    button.adjustsImageSizeForAccessibilityContentSizeCategory = false
+    
+    button.setPreferredSymbolConfiguration(
+        UIImage.SymbolConfiguration(pointSize: 28, weight: .regular),
+        forImageIn: .normal
+    )
+    
     button.setImage(
       UIImage(systemName: "play.circle.fill"),
       for: .normal
