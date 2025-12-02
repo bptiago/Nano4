@@ -50,13 +50,17 @@ class ToggleCell: UITableViewCell {
   private func setupConstraints() {
     NSLayoutConstraint.activate([
       titleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
-      titleLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8),
-      titleLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -8),
-      titleLabel.widthAnchor.constraint(equalToConstant: contentView.frame.width / 2),
-      
+      titleLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+
+      toggleSwitch.leadingAnchor.constraint(equalTo: titleLabel.trailingAnchor, constant: 8),
       toggleSwitch.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
-      toggleSwitch.topAnchor.constraint(equalTo: titleLabel.topAnchor),
-      toggleSwitch.bottomAnchor.constraint(equalTo: titleLabel.bottomAnchor)
+      toggleSwitch.centerYAnchor.constraint(equalTo: titleLabel.centerYAnchor),
+
+      titleLabel.topAnchor.constraint(greaterThanOrEqualTo: contentView.topAnchor, constant: 8),
+      titleLabel.topAnchor.constraint(greaterThanOrEqualTo: contentView.topAnchor, constant: 8),
+
+      contentView.bottomAnchor.constraint(greaterThanOrEqualTo: toggleSwitch.bottomAnchor, constant: 8),
+      contentView.bottomAnchor.constraint(greaterThanOrEqualTo: titleLabel.bottomAnchor, constant: 8)
     ])
   }
 }

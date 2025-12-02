@@ -58,15 +58,20 @@ class SliderCell: UITableViewCell {
   }
   
   private func setupConstraints() {
-    NSLayoutConstraint.activate([
-      slider.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8),
-      slider.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -8),
-      slider.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
-      
-      valueLabel.topAnchor.constraint(equalTo: slider.topAnchor),
-      valueLabel.bottomAnchor.constraint(equalTo: slider.bottomAnchor),
-      valueLabel.leadingAnchor.constraint(equalTo: slider.trailingAnchor, constant: 8),
-      valueLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16)
-    ])
+      NSLayoutConstraint.activate([
+          slider.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
+          slider.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+
+          valueLabel.leadingAnchor.constraint(equalTo: slider.trailingAnchor, constant: 8),
+          valueLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
+          valueLabel.centerYAnchor.constraint(equalTo: slider.centerYAnchor),
+
+          slider.topAnchor.constraint(greaterThanOrEqualTo: contentView.topAnchor, constant: 8),
+          valueLabel.topAnchor.constraint(greaterThanOrEqualTo: contentView.topAnchor, constant: 8),
+
+          contentView.bottomAnchor.constraint(greaterThanOrEqualTo: slider.bottomAnchor, constant: 8),
+          contentView.bottomAnchor.constraint(greaterThanOrEqualTo: valueLabel.bottomAnchor, constant: 8)
+      ])
   }
+
 }

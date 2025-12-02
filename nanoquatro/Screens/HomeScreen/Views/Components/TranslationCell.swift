@@ -33,7 +33,7 @@ class TranslationCell: UICollectionViewCell {
   )
   
   private(set) lazy var originalText: UILabel = {
-    let view = Styles.createLabel(fontSize: .title2)
+    let view = Styles.createLabel(fontSize: .title2, fontWeight: .regular)
     view.numberOfLines = 0
     
     return view

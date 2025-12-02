@@ -12,12 +12,13 @@ class Styles {
   static func createLabel(
     text: String = "",
     fontSize: UIFont.TextStyle = .callout,
-    fontColor: UIColor = .appFont
+    fontColor: UIColor = .appFont,
+    fontWeight: UIFont.Weight = .semibold
   ) -> UILabel {
     let view = UILabel()
     
 //    view.font = .systemFont(ofSize: fontSize, weight: .semibold)
-    view.font = .preferredFont(forTextStyle: fontSize)
+    view.font = .preferredFont(forTextStyle: fontSize).withWeight(fontWeight)
     view.text = text
     view.textColor = fontColor
     view.translatesAutoresizingMaskIntoConstraints = false

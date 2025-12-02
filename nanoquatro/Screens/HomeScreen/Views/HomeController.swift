@@ -36,8 +36,6 @@ class HomeController: UIViewController {
   
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
-    navigationController?.navigationBar.prefersLargeTitles = true
-    navigationController?.navigationBar.topItem?.largeTitleDisplayMode = .always
   }
   
   private func configureNavigationBar() {
