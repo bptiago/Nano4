@@ -12,16 +12,16 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		27DC620E2E96D96100D98902 /* nanoquatro.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = nanoquatro.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		27DC620E2E96D96100D98902 /* Morsificando.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Morsificando.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		27DC62202E96D96100D98902 /* Exceptions for "nanoquatro" folder in "nanoquatro" target */ = {
+		27DC62202E96D96100D98902 /* Exceptions for "nanoquatro" folder in "Morsificando" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Info.plist,
 			);
-			target = 27DC620D2E96D96100D98902 /* nanoquatro */;
+			target = 27DC620D2E96D96100D98902 /* Morsificando */;
 		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
@@ -29,7 +29,7 @@
 		27DC62102E96D96100D98902 /* nanoquatro */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
-				27DC62202E96D96100D98902 /* Exceptions for "nanoquatro" folder in "nanoquatro" target */,
+				27DC62202E96D96100D98902 /* Exceptions for "nanoquatro" folder in "Morsificando" target */,
 			);
 			path = nanoquatro;
 			sourceTree = "<group>";
@@ -60,7 +60,7 @@
 		27DC620F2E96D96100D98902 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				27DC620E2E96D96100D98902 /* nanoquatro.app */,
+				27DC620E2E96D96100D98902 /* Morsificando.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -68,9 +68,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		27DC620D2E96D96100D98902 /* nanoquatro */ = {
+		27DC620D2E96D96100D98902 /* Morsificando */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 27DC62212E96D96100D98902 /* Build configuration list for PBXNativeTarget "nanoquatro" */;
+			buildConfigurationList = 27DC62212E96D96100D98902 /* Build configuration list for PBXNativeTarget "Morsificando" */;
 			buildPhases = (
 				27DC620A2E96D96100D98902 /* Sources */,
 				27DC620B2E96D96100D98902 /* Frameworks */,
@@ -83,13 +83,13 @@
 			fileSystemSynchronizedGroups = (
 				27DC62102E96D96100D98902 /* nanoquatro */,
 			);
-			name = nanoquatro;
+			name = Morsificando;
 			packageProductDependencies = (
 				277AB3152EAA92EB00EC7B1C /* AudioKit */,
 				277AB31B2EAA93D900EC7B1C /* SoundpipeAudioKit */,
 			);
 			productName = nanoquatro;
-			productReference = 27DC620E2E96D96100D98902 /* nanoquatro.app */;
+			productReference = 27DC620E2E96D96100D98902 /* Morsificando.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -107,7 +107,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 27DC62092E96D96100D98902 /* Build configuration list for PBXProject "nanoquatro" */;
+			buildConfigurationList = 27DC62092E96D96100D98902 /* Build configuration list for PBXProject "Morsificando" */;
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -125,7 +125,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				27DC620D2E96D96100D98902 /* nanoquatro */,
+				27DC620D2E96D96100D98902 /* Morsificando */,
 			);
 		};
 /* End PBXProject section */
@@ -335,7 +335,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		27DC62092E96D96100D98902 /* Build configuration list for PBXProject "nanoquatro" */ = {
+		27DC62092E96D96100D98902 /* Build configuration list for PBXProject "Morsificando" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				27DC62242E96D96100D98902 /* Debug */,
@@ -344,7 +344,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		27DC62212E96D96100D98902 /* Build configuration list for PBXNativeTarget "nanoquatro" */ = {
+		27DC62212E96D96100D98902 /* Build configuration list for PBXNativeTarget "Morsificando" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				27DC62222E96D96100D98902 /* Debug */,
